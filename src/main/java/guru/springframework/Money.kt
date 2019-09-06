@@ -1,29 +1,24 @@
 package guru.springframework
+open class Money (protected open var amount: Int=0){
 
-class Dollar(var amount:Int=0){
-    private fun amount()=amount
-    fun times(multiplier:Int):Dollar{
-        return Dollar(amount*multiplier)
+    fun dollar(value: Int)=Dollar(value)
+    fun franc(value: Int)=Franc(value)
+
+    fun times(multiplier:Int): Money {
+        return Money(amount*multiplier)
     }
     override fun equals(other: Any?):Boolean {
         return when(other){
-            is Dollar -> other.amount== amount
+            is Money -> (other.amount== amount) //&& this::class == other::class
             else -> false
         }
-
     }
+}
+
+class Dollar(override var amount:Int=0): Money(amount = amount) {
 
 }
-class Franc(var amount:Int=0){
-    private fun amount()=amount
-    fun times(multiplier:Int):Franc{
-        return Franc(amount*multiplier)
-    }
-    override fun equals(other: Any?):Boolean {
-        return when(other){
-            is Franc -> other.amount== amount
-            else -> false
-        }
+class Franc(override var amount:Int=0):Money(amount=amount){
 
-    }
+
 }
